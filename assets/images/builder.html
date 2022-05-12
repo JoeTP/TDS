@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>JQueryBuilder</title>
+    <link rel="stylesheet" type="text/css"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css"
+          href="https://cdn.jsdelivr.net/jquery.query-builder/2.3.3/css/query-builder.default.min.css"/>
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/jquery.query-builder/2.3.3/js/query-builder.standalone.min.js"></script>
+</head>
+<body>
+<div id="builder"></div>
+<br/>
+</body>
+<script>
+    var result = parent.rules_basic //this access the rules_basic variable defined on dart using js.context, i.e. js.context['rules_basic']
+    parent.onUpdateRules(JSON.stringify(result, null, 0)); // this calls onUpdateRules fucntion defined on dart using js.context
+  
+    var builder = $('#builder'); //get and store the reference of the builder in a variable
+  
+    try{
+      builder.queryBuilder({
+          plugins: ['bt-tooltip-errors'], //initialising it with tool tip errors, for enabling validations on ui level 
+          filters: parent.fetch_filters,  // this accesses the fetch_filters variable defined on dart using js.context, i.e. js.context['fetch_filters'], fetch_filters are filters that initally defines the set of configuration of the builder
+          rules: parent.rules_basic
+        });
+    }catch(err){
+     console.log(err);
+       builder.queryBuilder({
+          plugins: ['bt-tooltip-errors'],
+          filters: parent.fetch_filters,
+        });
+    }
+  
+  //registering events to make onUpdateRules call, on each event trigger
+      builder.on("afterUpdateGroupCondition.queryBuilder \
+        afterUpdateRuleFilter.queryBuilder \
+        afterUpdateRuleOperator.queryBuilder \
+        afterInit.queryBuilder \
+        afterUpdateRuleValue.queryBuilder \
+        afterAddGroup.queryBuilder \
+        afterDeleteGroup.queryBuilder \
+        afterDeleteRule.queryBuilder", () => {
+            result = builder.queryBuilder('getRules', { allow_invalid: true });
+            if (!$.isEmptyObject(result)) {
+               parent.onUpdateRules(JSON.stringify(result, null, 0));
+            }
+        });
+
+      //When rules changed :
+      $('#builder').on('getRules.queryBuilder.filter', function(e) {
+        console.log("values updated");
+        console.log(e.value);
+        //$log.info(e.value);
+      });
+
+</script>
+</html>

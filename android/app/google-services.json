@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "65091340246",
+    "project_id": "tds-f1dbc",
+    "storage_bucket": "tds-f1dbc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:65091340246:android:34ea855871fd3dd94dc677",
+        "android_client_info": {
+          "package_name": "com.example.tds_statefull"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "65091340246-86kciagfm2r9tqtfor0b2oqkejqauqh5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAmuZ3ATaI1UhXcjrW69Z-oOVKGq-C_TEY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "65091340246-86kciagfm2r9tqtfor0b2oqkejqauqh5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
